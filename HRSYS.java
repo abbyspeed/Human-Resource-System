@@ -90,8 +90,6 @@ public class HRSYS {
     }
 
     public static void addStaff(Scanner keyin) {
-        Employee staff = new Staff();
-        staff.keyinInfo(keyin);
         pressEnter(keyin);
     }
 
@@ -129,7 +127,7 @@ abstract class Employee{
     }
 
     public void keyinInfo(Scanner keyin){
-        System.out.println("ADD NEW STAFF");
+        System.out.println("\nADD NEW STAFF");
         System.out.println("Contract staff? (y/n): ");
     }
 
@@ -212,7 +210,7 @@ class ContractStaff extends Staff{
         System.out.println("Month(s) of Contract: ");
         int cm = Integer.parseInt(keyin.nextLine());
 
-        ContractStaff cs = new ContractStaff(name, icNo, icNo, cm);
+        Employee cs = new ContractStaff(name, icNo, icNo, cm);
     }
 }
 
@@ -222,6 +220,7 @@ class Company{
 
     public Company(String name){
         this.name = name;
+        departments = new ArrayList<Department>();
     }
 
     public String getName(){
