@@ -64,7 +64,7 @@ public class HRSYS {
 
     public static void addCompany(Scanner keyin) {
         System.out.println("\nADD NEW COMPANY");
-        System.out.println("Company Name: ");
+        System.out.print("Company Name: ");
         String name = keyin.nextLine();
 
         companies.add(new Company(name));
@@ -73,9 +73,10 @@ public class HRSYS {
 
     public static void addDepartment(Scanner keyin) {
         System.out.println("\nADD NEW DEPARTMENT");
-        System.out.println("Department Name: ");
+        System.out.print("Department Name: ");
         String departmentName = keyin.nextLine();
 
+        System.out.println("");
         for(int i=0; i<companies.size(); i++){
             System.out.println(i+1 + " - " + companies.get(i).getName());
         }
@@ -83,12 +84,14 @@ public class HRSYS {
         System.out.println("Choose company to add department: ");
         int choice = Integer.parseInt(keyin.nextLine());
 
-        companies.get(choice).addDepartment(departmentName);
+        companies.get(choice-1).addDepartment(departmentName);
 
         pressEnter(keyin);
     }
 
     public static void addStaff(Scanner keyin) {
+        Employee staff = new Staff();
+        staff.keyinInfo(keyin);
         pressEnter(keyin);
     }
 
@@ -159,16 +162,22 @@ class Staff extends Employee{
     }
 
     public void keyinInfo(Scanner keyin){
-        keyinInfo(keyin);
+        super.keyinInfo(keyin);
+        String choice = keyin.nextLine();
 
-        System.out.println("Name: ");
-        String name = keyin.nextLine();
+        if(choice == "N" || choice == "n"){
+            System.out.println("Name: ");
+            String name = keyin.nextLine();
 
-        System.out.println("IC No.: ");
-        String icNo = keyin.nextLine();
+            System.out.println("IC No.: ");
+            String icNo = keyin.nextLine();
 
-        System.out.println("Post: ");
-        String position = keyin.nextLine();
+            System.out.println("Post: ");
+            String position = keyin.nextLine();
+
+            Employee staff = new Staff(name, icNo, position);
+
+        }
     }
 
     public void setDepartment(Department dept){
@@ -199,7 +208,7 @@ class ContractStaff extends Staff{
     }
 
     public void keyinInfo(Scanner keyin) {
-        keyinInfo(keyin);
+        super.keyinInfo(keyin);
         System.out.println("Month(s) of Contract: ");
         int cm = Integer.parseInt(keyin.nextLine());
 
