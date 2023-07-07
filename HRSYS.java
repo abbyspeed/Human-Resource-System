@@ -95,14 +95,15 @@ public class HRSYS {
         String choice = keyin.nextLine();
 
         if(choice == "N" || choice == "n"){
-            Employee regularStaff = new Staff();
-            regularStaff.keyinInfo(keyin);
-            employees.add(regularStaff);
+            Employee staff = new Staff();
+            staff.keyinInfo(keyin);
         }else{
-            Employee contractStaff = new ContractStaff();
-            contractStaff.keyinInfo(keyin);
-            employees.add(contractStaff);
+            Employee staff = new ContractStaff();
+            staff.keyinInfo(keyin);
+            employees.add(staff);
         }
+
+        employees.add(staff);
 
         System.out.println("");
         for(int i=0; i<companies.size(); i++){
@@ -111,6 +112,8 @@ public class HRSYS {
 
         System.out.print("Choose company's department to add staff: ");
         int deptChoice = Integer.parseInt(keyin.nextLine());
+
+        staff.setDepartment(companies.get(deptChoice-1).getDepartments().get(deptChoice-1));
 
         pressEnter(keyin);
     }
