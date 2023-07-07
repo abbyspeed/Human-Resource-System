@@ -94,20 +94,20 @@ public class HRSYS {
         System.out.print("Contract staff? (y/n): ");
         String choice = keyin.nextLine();
 
+        Employee staff = new Staff();
+        staff.keyinInfo(keyin);
         if(choice == "N" || choice == "n"){
-            Employee staff = new Staff();
-            staff.keyinInfo(keyin);
-        }else{
-            Employee staff = new ContractStaff();
             staff.keyinInfo(keyin);
             employees.add(staff);
+        }else{
+            Employee cStaff = new ContractStaff();
+            cStaff.keyinInfo(keyin);
+            employees.add(cStaff);
         }
-
-        employees.add(staff);
 
         System.out.println("");
         for(int i=0; i<companies.size(); i++){
-            System.out.println(i+1 + " - " + companies.get(i).getDepartments());
+            System.out.println(i+1 + " - " + companies.get(i).getDepartments().get(i).getName());
         }
 
         System.out.print("Choose company's department to add staff: ");
@@ -119,16 +119,18 @@ public class HRSYS {
     }
 
     public static void listStaff(Scanner keyin) {
+        System.out.println("");
         System.out.println("STAFF LIST RECORD \n");
-        System.out.println("No.   Name          IC No.      Post          Company-Department");
+        System.out.println("No.   Name          IC No.        Post          Company-Department");
         System.out.println("----------------------------------------------------------------");
 
         for(int i=0; i<employees.size(); i++){
-            System.out.printf("%d     %s          %s         %s            %s", 
+            System.out.printf("%d     %s          %s         %s            %s-%s", 
             i+1, 
             employees.get(i).getName(), 
             employees.get(i).getICNo(),
             employees.get(i).getPost(),
+            employees.get(i).getDepartment().getCompany(),
             employees.get(i).getDepartment());
         }
 
