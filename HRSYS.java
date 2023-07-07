@@ -161,6 +161,36 @@ class Staff{
 
 }
 
-class ContractStaff{
+class ContractStaff implements Staff{
+    int contractMonth;
+    
+    ContractStaff(){}
+
+    public Staff (String name, String icNo, String post, int contractMonth){
+        super(name, icNo, post);
+        contractMonth = this.contractMonth;
+        
+    }
+
+     public static void keyinInfo(Scanner scanner) {
+        System.out.print("Enter staff name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter staff IC Number: ");
+        int age = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter staff department: ");
+        String position = scanner.nextLine();
+
+        
+        Staff staff = new Staff(name, age, post);
+
+       
+        System.out.println("Staff information entered:");
+        System.out.println("Name: " + staff.getName());
+        System.out.println("Age: " + staff.getIcNo()); 
+        System.out.println("Position: " + staff.getPost());
+    }
+
     
 }
