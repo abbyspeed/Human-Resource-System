@@ -63,36 +63,29 @@ public class HRSYS {
     }
 
     public static void addCompany(Scanner keyin) {
+        System.out.println("\nADD NEW COMPANY");
+        System.out.println("Company Name: ");
+        String name = keyin.nextLine();
+
+        companies.add(new Company(name));
         pressEnter(keyin);
     }
 
     public static void addDepartment(Scanner keyin) {
-        System.out.println();
-        System.out.println("ADD NEW DEPARTMENT");
-
-        if (companies.isEmpty()) {
-            System.out.println("No companies found.");
-            pressEnter(keyin);
-            return;
-        }
-
-        System.out.print("Department Name: ");
+        System.out.println("\nADD NEW DEPARTMENT");
+        System.out.println("Department Name: ");
         String departmentName = keyin.nextLine();
 
-        System.out.println();
-        //System.out.println("Available Companies:");
-        for (int i = 0; i < companies.size(); i++) {
-            System.out.println((i + 1) + " - " + companies.get(i).getName());
+        for(int i=0; i<companies.size(); i++){
+            System.out.println(i+1 + " - " + companies.get(i).getName());
         }
+        
+        System.out.println("Choose company to add department: ");
+        int choice = Integer.parseInt(keyin.nextLine());
 
-        System.out.print("Choose company to add department: ");
-        int companyIndex = Integer.parseInt(keyin.nextLine()) - 1;
+        companies.get(choice).addDepartment(departmentName);
 
-        if (companyIndex < 0 || companyIndex >= companies.size()) {
-            System.out.println("Invalid company selection.");
-            pressEnter(keyin);
-            return;
-        }
+        pressEnter(keyin);
     }
 
     public static void addStaff(Scanner keyin) {
@@ -100,6 +93,19 @@ public class HRSYS {
     }
 
     public static void listStaff(Scanner keyin) {
+        System.out.println("STAFF LIST RECORD \n");
+        System.out.println("No.   Name          IC No.      Post          Company-Department");
+        System.out.println("----------------------------------------------------------------");
+
+        for(int i=0; i<employees.size(); i++){
+            System.out.printf("%d     %s          %s         %s          %s", 
+            i+1, 
+            employees.get(i).getName(), 
+            employees.get(i).getICNo(),
+            employees.get(i).getPost(),
+            employees.get(i).getDepartment());
+        }
+
         pressEnter(keyin);
     }
 
@@ -119,7 +125,10 @@ abstract class Employee{
         this.icNo = icNo;
     }
 
-    public void keyinInfo(Scanner input){}
+    public void keyinInfo(Scanner keyin){
+        System.out.println("ADD NEW STAFF");
+        System.out.println("Contract staff? (y/n): ");
+    }
 
     public String getName(){
         return name;
@@ -138,59 +147,102 @@ abstract class Employee{
     public abstract int getContractMonth();
 }
 
+class Staff extends Employee{
+    private String post;
+    private Department department;
+
+    public Staff(){}
+
+    public Staff(String name, String icNo, String post){
+        super(name, icNo);
+        this.post = post;
+    }
+
+    public void keyinInfo(Scanner keyin){
+        keyinInfo(keyin);
+
+        System.out.println("Name: ");
+        String name = keyin.nextLine();
+
+        System.out.println("IC No.: ");
+        String icNo = keyin.nextLine();
+
+        System.out.println("Post: ");
+        String position = keyin.nextLine();
+    }
+
+    public void setDepartment(Department dept){
+        department = dept;
+    }
+
+    public Department getDepartment(){
+        return department;
+    }
+
+    public String getPost(){
+        return post;
+    }
+
+    public int getContractMonth(){
+        return -1;
+    }
+}
+
+class ContractStaff extends Staff{
+    private int contractMonth;
+    
+    public ContractStaff(){}
+
+    public ContractStaff(String name, String icNo, String post, int contractMonth){
+        super(name, icNo, post);
+        this.contractMonth = contractMonth;
+    }
+
+    public void keyinInfo(Scanner keyin) {
+        keyinInfo(keyin);
+        System.out.println("Month(s) of Contract: ");
+        int cm = Integer.parseInt(keyin.nextLine());
+
+        ContractStaff cs = new ContractStaff(name, icNo, icNo, cm);
+    }
+}
+
 class Company{
     private String name;
     private ArrayList<Department> departments;
 
-    public Company(String name){}
+    public Company(String name){
+        this.name = name;
+    }
 
     public String getName(){
         return name;
     }
 
-    public void addDepartment(String dept){}
+    public void addDepartment(String dept){
+        departments.add(new Department(dept, new Company(name)));
+    }
 
-    public ArrayList<Department> getDepartments(){}
+    public ArrayList<Department> getDepartments(){
+        return departments;
+    }
 }
 
 class Department{
+    private String name;
+    private Company company;
+    private ArrayList<Employee> staffs;
 
-}
-
-class Staff{
-
-}
-
-class ContractStaff implements Staff{
-    int contractMonth;
-    
-    ContractStaff(){}
-
-    public Staff (String name, String icNo, String post, int contractMonth){
-        super(name, icNo, post);
-        contractMonth = this.contractMonth;
-        
+    public Department(String name, Company company){
+        this.name = name;
+        this.company = company;
     }
 
-     public static void keyinInfo(Scanner scanner) {
-        System.out.print("Enter staff name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter staff IC Number: ");
-        int age = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Enter staff department: ");
-        String position = scanner.nextLine();
-
-        
-        Staff staff = new Staff(name, age, post);
-
-       
-        System.out.println("Staff information entered:");
-        System.out.println("Name: " + staff.getName());
-        System.out.println("Age: " + staff.getIcNo()); 
-        System.out.println("Position: " + staff.getPost());
+    public String getName(){
+        return name;
     }
 
-    
+    public Company getCompany(){
+        return company;
+    }
 }
