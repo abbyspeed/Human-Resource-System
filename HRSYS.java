@@ -81,15 +81,37 @@ public class HRSYS {
             System.out.println(i+1 + " - " + companies.get(i).getName());
         }
         
-        System.out.println("Choose company to add department: ");
-        int choice = Integer.parseInt(keyin.nextLine());
+        System.out.print("Choose company to add department: ");
+        int compChoice = Integer.parseInt(keyin.nextLine());
 
-        companies.get(choice-1).addDepartment(departmentName);
+        companies.get(compChoice-1).addDepartment(departmentName);
 
         pressEnter(keyin);
     }
 
     public static void addStaff(Scanner keyin) {
+        System.out.println("\nADD NEW STAFF");
+        System.out.print("Contract staff? (y/n): ");
+        String choice = keyin.nextLine();
+
+        if(choice == "N" || choice == "n"){
+            Employee regularStaff = new Staff();
+            regularStaff.keyinInfo(keyin);
+            employees.add(regularStaff);
+        }else{
+            Employee contractStaff = new ContractStaff();
+            contractStaff.keyinInfo(keyin);
+            employees.add(contractStaff);
+        }
+
+        System.out.println("");
+        for(int i=0; i<companies.size(); i++){
+            System.out.println(i+1 + " - " + companies.get(i).getDepartments());
+        }
+
+        System.out.print("Choose company's department to add staff: ");
+        int deptChoice = Integer.parseInt(keyin.nextLine());
+
         pressEnter(keyin);
     }
 
@@ -99,7 +121,7 @@ public class HRSYS {
         System.out.println("----------------------------------------------------------------");
 
         for(int i=0; i<employees.size(); i++){
-            System.out.printf("%d     %s          %s         %s          %s", 
+            System.out.printf("%d     %s          %s         %s            %s", 
             i+1, 
             employees.get(i).getName(), 
             employees.get(i).getICNo(),
@@ -127,8 +149,17 @@ abstract class Employee{
     }
 
     public void keyinInfo(Scanner keyin){
-        System.out.println("\nADD NEW STAFF");
-        System.out.println("Contract staff? (y/n): ");
+        // System.out.println("\nADD NEW STAFF");
+        // System.out.print("Contract staff? (y/n): ");
+        // String choice = keyin.nextLine();
+
+        // if(choice == "N" || choice == "n"){
+        //     Employee regularStaff = new Staff();
+        //     regularStaff.keyinInfo(keyin);
+        // }else{
+        //     Employee contractStaff = new ContractStaff();
+        //     contractStaff.keyinInfo(keyin);
+        // }
     }
 
     public String getName(){
@@ -160,22 +191,14 @@ class Staff extends Employee{
     }
 
     public void keyinInfo(Scanner keyin){
-        super.keyinInfo(keyin);
-        String choice = keyin.nextLine();
+        System.out.print("Name: ");
+        name = keyin.nextLine();
 
-        if(choice == "N" || choice == "n"){
-            System.out.println("Name: ");
-            String name = keyin.nextLine();
+        System.out.print("IC No.: ");
+        icNo = keyin.nextLine();
 
-            System.out.println("IC No.: ");
-            String icNo = keyin.nextLine();
-
-            System.out.println("Post: ");
-            String position = keyin.nextLine();
-
-            Employee staff = new Staff(name, icNo, position);
-
-        }
+        System.out.print("Post: ");
+        post = keyin.nextLine();
     }
 
     public void setDepartment(Department dept){
@@ -207,10 +230,8 @@ class ContractStaff extends Staff{
 
     public void keyinInfo(Scanner keyin) {
         super.keyinInfo(keyin);
-        System.out.println("Month(s) of Contract: ");
-        int cm = Integer.parseInt(keyin.nextLine());
-
-        Employee cs = new ContractStaff(name, icNo, icNo, cm);
+        System.out.print("Month(s) of Contract: ");
+        contractMonth = Integer.parseInt(keyin.nextLine());
     }
 }
 
@@ -244,6 +265,7 @@ class Department{
     public Department(String name, Company company){
         this.name = name;
         this.company = company;
+        staffs = new ArrayList<Employee>();
     }
 
     public String getName(){

@@ -1,0 +1,1 @@
+System.out.println("Contract staff? (y/n): ");
