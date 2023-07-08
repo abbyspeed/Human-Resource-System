@@ -109,7 +109,7 @@ public class HRSYS {
             System.out.println(i+1 + " - " + companies.get(i).getDepartments().get(i).getName());
         }
 
-        System.out.print("Choose company's department to add staff: ");
+        System.out.print("Choose company's department to attach staff: ");
         int deptChoice = Integer.parseInt(keyin.nextLine());
 
         employees.get(employees.size()-1).setDepartment(companies.get(deptChoice-1).getDepartments().get(deptChoice-1));
@@ -133,7 +133,7 @@ public class HRSYS {
             employees.get(i).getDepartment().getName());
 
             if(employees.isEmpty() == false){
-                System.out.println(" (" + employees.get(i).getContractMonth() + ") ");
+                System.out.println(" (" + employees.get(i).getContractMonth() + " months of contract)");
             }
         }
 
@@ -156,19 +156,7 @@ abstract class Employee{
         this.icNo = icNo;
     }
 
-    public void keyinInfo(Scanner keyin){
-        // System.out.println("\nADD NEW STAFF");
-        // System.out.print("Contract staff? (y/n): ");
-        // String choice = keyin.nextLine();
-
-        // if(choice == "N" || choice == "n"){
-        //     Employee regularStaff = new Staff();
-        //     regularStaff.keyinInfo(keyin);
-        // }else{
-        //     Employee contractStaff = new ContractStaff();
-        //     contractStaff.keyinInfo(keyin);
-        // }
-    }
+    public void keyinInfo(Scanner keyin){}
 
     public String getName(){
         return name;
@@ -240,6 +228,10 @@ class ContractStaff extends Staff{
         super.keyinInfo(keyin);
         System.out.print("Month(s) of Contract: ");
         contractMonth = Integer.parseInt(keyin.nextLine());
+    }
+
+    public int getContractMonth(){
+        return contractMonth - 1;
     }
 }
 
