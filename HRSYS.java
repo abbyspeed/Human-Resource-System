@@ -106,13 +106,21 @@ public class HRSYS {
 
         System.out.println("");
         for(int i=0; i<companies.size(); i++){
-            System.out.println(i+1 + " - " + companies.get(i).getDepartments().get(i).getName());
+            System.out.println(i+1 + " - " + companies.get(i).getName());
+        }
+        
+        System.out.print("Choose company to add staff: ");
+        int compChoice = Integer.parseInt(keyin.nextLine());
+
+        System.out.println("");
+        for(int i=0; i<companies.size(); i++){
+            System.out.println(i+1 + " - " + companies.get(compChoice-1).getDepartments().get(i).getName());
         }
 
         System.out.print("Choose company's department to attach staff: ");
         int deptChoice = Integer.parseInt(keyin.nextLine());
 
-        employees.get(employees.size()-1).setDepartment(companies.get(deptChoice-1).getDepartments().get(deptChoice-1));
+        employees.get(employees.size()-1).setDepartment(companies.get(compChoice-1).getDepartments().get(deptChoice-1));
 
         pressEnter(keyin);
     }
@@ -120,11 +128,11 @@ public class HRSYS {
     public static void listStaff(Scanner keyin) {
         System.out.println("");
         System.out.println("STAFF LIST RECORD \n");
-        System.out.println("No.   Name          IC No.        Post          Company-Department");
-        System.out.println("----------------------------------------------------------------");
+        System.out.println("No.    Name           IC No.        Post                    Company-Department");
+        System.out.println("-----------------------------------------------------------------------------");
 
         for(int i=0; i<employees.size(); i++){
-            System.out.printf("%d     %s          %s         %s            %s-%s", 
+            System.out.printf("%d      %s           %s         %s                      %s-%s", 
             i+1, 
             employees.get(i).getName(), 
             employees.get(i).getICNo(),
@@ -132,9 +140,11 @@ public class HRSYS {
             employees.get(i).getDepartment().getCompany().getName(),
             employees.get(i).getDepartment().getName());
 
-            if(employees.isEmpty() == false){
-                System.out.println(" (" + employees.get(i).getContractMonth() + " months of contract)");
+            if(employees.get(i).getContractMonth() > 0){
+                System.out.print(" (" + employees.get(i).getContractMonth() + " months of contract)");
             }
+
+            System.out.println("");
         }
 
         pressEnter(keyin);
