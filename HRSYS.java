@@ -94,7 +94,7 @@ public class HRSYS {
         System.out.print("Contract staff? (y/n): ");
         String choice = keyin.nextLine();
 
-        if(choice == "N" || choice == "n"){
+        if(choice.equalsIgnoreCase("N")){
             Employee staff = new Staff();
             staff.keyinInfo(keyin);
             employees.add(staff);
@@ -112,7 +112,7 @@ public class HRSYS {
         System.out.print("Choose company's department to add staff: ");
         int deptChoice = Integer.parseInt(keyin.nextLine());
 
-        staff.setDepartment(companies.get(deptChoice-1).getDepartments().get(deptChoice-1));
+        employees.get(employees.size()-1).setDepartment(companies.get(deptChoice-1).getDepartments().get(deptChoice-1));
 
         pressEnter(keyin);
     }
@@ -129,8 +129,12 @@ public class HRSYS {
             employees.get(i).getName(), 
             employees.get(i).getICNo(),
             employees.get(i).getPost(),
-            employees.get(i).getDepartment().getCompany(),
-            employees.get(i).getDepartment());
+            employees.get(i).getDepartment().getCompany().getName(),
+            employees.get(i).getDepartment().getName());
+
+            if(employees.isEmpty() == false){
+                System.out.println(" (" + employees.get(i).getContractMonth() + ") ");
+            }
         }
 
         pressEnter(keyin);
