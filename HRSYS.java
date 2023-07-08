@@ -94,9 +94,8 @@ public class HRSYS {
         System.out.print("Contract staff? (y/n): ");
         String choice = keyin.nextLine();
 
-        Employee staff = new Staff();
-        staff.keyinInfo(keyin);
         if(choice == "N" || choice == "n"){
+            Employee staff = new Staff();
             staff.keyinInfo(keyin);
             employees.add(staff);
         }else{
