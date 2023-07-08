@@ -16,13 +16,13 @@ public class HRSYS {
     public static void main(String[] args) {
 
         // Test case to quickly add company, department, and staff
-        //Company com = new Company("Farmfresh");
-        //companies.add(com);
-        //companies.get(0).addDepartment("Admin");
+        // Company com = new Company("Farmfresh");
+        // companies.add(com);
+        // companies.get(0).addDepartment("Admin");
 
-        //Employee staff = new ContractStaff("AZMI", "A123", "CEO", 6);
-        //staff.setDepartment(companies.get(0).getDepartments().get(0));
-        //employees.add(staff);
+        // Employee staff = new ContractStaff("AZMI", "A123", "CEO", 6);
+        // staff.setDepartment(companies.get(0).getDepartments().get(0));
+        // employees.add(staff);
         // End test case
 
         Scanner keyin = new Scanner(System.in);
